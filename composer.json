@@ -4,9 +4,11 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "auxmoney/opentracing-bundle-zipkin": "^v1.3.0",
+        "auxmoney/opentracing-bundle-jaeger": "^1.2",
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.16",

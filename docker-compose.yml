@@ -1,21 +1,36 @@
 version: '3'
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-15}-alpine
+  php:
+    container_name: php-test
+    image: php-test
+    ports:
+      - "8080:80"
+    restart: always
+#    environment:
+#      - JAEGER_SERVICE_NAME=service
+#      - JAEGER_AGENT_HOST=jaeger
+#      - JAEGER_AGENT_PORT=6831
+#      - JAEGER_SAMPLER_MANAGER_HOST_PORT=jaeger:5778
+  jaeger:
+    image: jaegertracing/all-in-one:1.49
+    container_name: jaeger
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
-    volumes:
-      - database_data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+    ports:
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "4318:4318"
+      - "4317:4317"
+      - "14250:14250"
+      - "14268:14268"
+      - "14269:14269"
+      - "9411:9411"
+    restart: always
 
-volumes:
-###> doctrine/doctrine-bundle ###
-  database_data:
-###< doctrine/doctrine-bundle ###
+networks:
+  default:
+    name: jaeger
+    external: true

@@ -1,4 +1,7 @@
 {
+    "auxmoney/opentracing-bundle-jaeger": {
+        "version": "v1.2.3"
+    },
     "doctrine/doctrine-bundle": {
         "version": "2.10",
         "recipe": {
